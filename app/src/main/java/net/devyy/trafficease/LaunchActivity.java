@@ -5,6 +5,7 @@ import android.content.Intent;
 import net.devyy.trafficease.improve.account.activity.LoginActivity;
 import net.devyy.trafficease.improve.app.AppOperator;
 import net.devyy.trafficease.improve.base.activities.BaseActivity;
+import net.devyy.trafficease.main.*;
 
 /**
  * 应用启动界面
@@ -59,6 +60,7 @@ public class LaunchActivity extends BaseActivity {
     }
 
     private void redirectTo() {
+//        Intent intent = new Intent(this, LoginActivity.class);
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
 //        LoginActivity.show(LaunchActivity.this);

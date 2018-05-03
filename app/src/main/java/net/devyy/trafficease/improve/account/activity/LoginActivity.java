@@ -48,7 +48,9 @@ import retrofit2.Response;
 public class LoginActivity extends AccountBaseActivity implements View.OnClickListener, View.OnFocusChangeListener,
         ViewTreeObserver.OnGlobalLayoutListener {
 
-    public static final String HOLD_USERNAME_KEY = "holdUsernameKey";
+//    public static final String HOLD_USERNAME_KEY = "holdUsernameKey";
+    public static final String PREFERENCE_NAME="SaveSetting";
+    public static final int MODE=Context.MODE_PRIVATE;
 
     // bufferknife 自动绑定部分
     @BindView(R.id.ly_retrieve_bar)
@@ -230,12 +232,12 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         super.initData();//必须要,用来注册本地广播
 
         //初始化控件状态数据
-        SharedPreferences sp = getSharedPreferences(UserConstants.HOLD_ACCOUNT, Context.MODE_PRIVATE);
-        String holdUsername = sp.getString(HOLD_USERNAME_KEY, null);
+//        SharedPreferences sp = getSharedPreferences(UserConstants.HOLD_ACCOUNT, Context.MODE_PRIVATE);
+//        String holdUsername = sp.getString(HOLD_USERNAME_KEY, null);
         //String holdPwd = sp.getString(HOLD_PWD_KEY, null);
         //int holdStatus = sp.getInt(HOLD_PWD_STATUS_KEY, 0);//0第一次默认/1用户设置保存/2用户设置未保存
 
-        etLoginUsername.setText(holdUsername);
+//        etLoginUsername.setText(holdUsername);
     }
 
     @Override
@@ -449,7 +451,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 Log.d("Login", "登录成功");
                 user = response.body();
                 Log.d("Login", "手机号密码-"+user.getTelephone()+user.getPassword());
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, net.devyy.trafficease.main.MainActivity.class);
                 startActivity(intent);
             }
 
@@ -545,5 +547,36 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             }
             valueAnimator.start();
         }
+    }
+
+    // SharedPreferences 新增部分，用于保存用户输入的手机号和密码
+    @Override
+    protected void onStop( ) {
+        saveSharedPreferences();
+        super.onStop();
+    }
+
+    @Override
+    protected void onStart( ) {
+        loadSharedPreferences();
+        super.onStart();
+    }
+
+    private void loadSharedPreferences(){
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCE_NAME, MODE);
+        String telephone = sharedPreferences.getString("Telephone","");
+        String password = sharedPreferences.getString("Password","");
+
+        etLoginUsername.setText(telephone);
+        etLoginPwd.setText(password);
+    }
+
+    private void saveSharedPreferences(){
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCE_NAME, MODE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+
+        editor.putString("Telephone",etLoginUsername.getText().toString());
+        editor.putString("Password",etLoginPwd.getText().toString());
+        editor.commit();
     }
 }
