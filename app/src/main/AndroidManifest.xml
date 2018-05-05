@@ -89,6 +89,10 @@
         <activity
             android:name=".main.MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+
+        <service android:name=".main.weather.service.AutoUpdateService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
