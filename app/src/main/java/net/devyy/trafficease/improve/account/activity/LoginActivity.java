@@ -26,13 +26,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import net.devyy.trafficease.MainActivity;
 import net.devyy.trafficease.R;
 import net.devyy.trafficease.api.RetrofitHelper;
 import net.devyy.trafficease.api.remote.TrafficEaseApi;
 import net.devyy.trafficease.improve.account.User;
 import net.devyy.trafficease.improve.account.base.AccountBaseActivity;
-import net.devyy.trafficease.improve.account.constants.UserConstants;
 
 import butterknife.BindView;
 import butterknife.OnClick;

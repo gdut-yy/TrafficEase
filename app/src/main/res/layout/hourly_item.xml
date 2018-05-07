@@ -5,7 +5,7 @@
     android:layout_margin="15dp">
 
     <TextView
-        android:id="@+id/date_text"
+        android:id="@+id/time_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -14,38 +14,38 @@
         android:textColor="#fff"/>
 
     <TextView
-        android:id="@+id/condd_text"
+        android:id="@+id/tmp_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:gravity="center"
         android:textColor="#fff"/>
 
     <TextView
-        android:id="@+id/condn_text"
+        android:id="@+id/cond_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:gravity="center"
         android:textColor="#fff"/>
 
     <TextView
-        android:id="@+id/max_text"
+        android:id="@+id/wind_dir_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:gravity="center"
         android:textColor="#fff"/>
 
     <TextView
-        android:id="@+id/min_text"
+        android:id="@+id/wind_sc_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:gravity="center"
         android:textColor="#fff"/>
 

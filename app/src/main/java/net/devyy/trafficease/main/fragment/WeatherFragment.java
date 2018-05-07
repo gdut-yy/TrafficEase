@@ -4,9 +4,8 @@ import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +17,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import net.devyy.trafficease.R;
-import net.devyy.trafficease.main.weather.gson.Forecast;
-import net.devyy.trafficease.main.weather.gson.Weather;
-import net.devyy.trafficease.main.weather.util.HttpUtil;
-import net.devyy.trafficease.main.weather.util.Utility;
+import net.devyy.trafficease.main.heweather.bean.HeweatherBean;
+import net.devyy.trafficease.main.heweather.util.HttpUtil;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -37,45 +38,44 @@ import okhttp3.Response;
 
 public class WeatherFragment extends Fragment {
 
-//    public DrawerLayout drawerLayout;
+    @BindView(R.id.comf_text)
+    TextView comfText;
+    @BindView(R.id.drsg_text)
+    TextView drsgText;
+    @BindView(R.id.flu_text)
+    TextView fluText;
+    @BindView(R.id.sport_text)
+    TextView sportText;
+    @BindView(R.id.trav_text)
+    TextView travText;
+    @BindView(R.id.uv_text)
+    TextView uvText;
+    @BindView(R.id.cw_text)
+    TextView cwText;
+    @BindView(R.id.air_text)
+    TextView airText;
+    Unbinder unbinder;
 
     public SwipeRefreshLayout swipeRefresh;
-
     private ScrollView weatherLayout;
-
     private Button navButton;
-
     private TextView titleCity;
-
     private TextView titleUpdateTime;
-
     private TextView degreeText;
-
     private TextView weatherInfoText;
-
+    private LinearLayout hourlyLayout;
     private LinearLayout forecastLayout;
-
-    private TextView aqiText;
-
-    private TextView pm25Text;
-
-    private TextView comfortText;
-
-    private TextView carWashText;
-
-    private TextView sportText;
-
     private ImageView bingPicImg;
-
     private String mWeatherId;
 
-    public WeatherFragment(){
+    private Gson gson = new Gson();
+
+    public WeatherFragment( ) {
 
     }
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.module_fragment_weather,container,false);
+        View view = inflater.inflate(R.layout.module_fragment_weather, container, false);
 
         // 初始化各控件
         bingPicImg = (ImageView) view.findViewById(R.id.bing_pic_img);
@@ -84,24 +84,20 @@ public class WeatherFragment extends Fragment {
         titleUpdateTime = (TextView) view.findViewById(R.id.title_update_time);
         degreeText = (TextView) view.findViewById(R.id.degree_text);
         weatherInfoText = (TextView) view.findViewById(R.id.weather_info_text);
+        hourlyLayout= (LinearLayout) view.findViewById(R.id.hourly_layout);
         forecastLayout = (LinearLayout) view.findViewById(R.id.forecast_layout);
-        aqiText = (TextView) view.findViewById(R.id.aqi_text);
-        pm25Text = (TextView) view.findViewById(R.id.pm25_text);
-        comfortText = (TextView) view.findViewById(R.id.comfort_text);
-        carWashText = (TextView) view.findViewById(R.id.car_wash_text);
-        sportText = (TextView) view.findViewById(R.id.sport_text);
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
-//        drawerLayout = (DrawerLayout) view.findViewById(R.id.drawer_layout);
         navButton = (Button) view.findViewById(R.id.nav_button);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String weatherString = prefs.getString("weather", null);
+        String weatherString = prefs.getString("HeWeather6", null);
         if (weatherString != null) {
             // 有缓存时直接解析天气数据
-            Weather weather = Utility.handleWeatherResponse(weatherString);
-            mWeatherId = weather.basic.weatherId;
-            showWeatherInfo(weather);
+            HeweatherBean heweatherBean = gson.fromJson(weatherString, HeweatherBean.class);
+            HeweatherBean.HeWeather6Bean heWeather6Bean = heweatherBean.getHeWeather6().get(0);
+            mWeatherId = heWeather6Bean.getBasic().getCid();
+            showWeatherInfo(heWeather6Bean);
         } else {
             // 无缓存时去服务器查询天气
 //            mWeatherId = getIntent().getStringExtra("weather_id");
@@ -111,7 +107,7 @@ public class WeatherFragment extends Fragment {
         }
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh( ) {
                 requestWeather(mWeatherId);
             }
         });
@@ -129,6 +125,7 @@ public class WeatherFragment extends Fragment {
         } else {
             loadBingPic();
         }
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -136,21 +133,24 @@ public class WeatherFragment extends Fragment {
      * 根据天气id请求城市天气信息。
      */
     public void requestWeather(final String weatherId) {
-        String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId + "&key=bc0418b57b2d4918819d3974ac1285d9";
+        String weatherUrl = "https://free-api.heweather.com/s6/weather?location=" + weatherId + "&key=ee1491e93c5d4e019a5f320c05aa59d9";
         HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
-                final Weather weather = Utility.handleWeatherResponse(responseText);
+                Log.d("json", responseText);
+//                final HeweatherBean heweatherBean = Utility.handleWeatherResponse(responseText);
+                final HeweatherBean heweatherBean = gson.fromJson(responseText, HeweatherBean.class);
+                final HeweatherBean.HeWeather6Bean heWeather6Bean = heweatherBean.getHeWeather6().get(0);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
-                    public void run() {
-                        if (weather != null && "ok".equals(weather.status)) {
+                    public void run( ) {
+                        if (heWeather6Bean != null && "ok".equals(heWeather6Bean.getStatus())) {
                             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
                             editor.putString("weather", responseText);
                             editor.apply();
-                            mWeatherId = weather.basic.weatherId;
-                            showWeatherInfo(weather);
+                            mWeatherId = heWeather6Bean.getBasic().getCid();
+                            showWeatherInfo(heWeather6Bean);
                         } else {
                             Toast.makeText(getActivity(), "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
@@ -164,7 +164,7 @@ public class WeatherFragment extends Fragment {
                 e.printStackTrace();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
-                    public void run() {
+                    public void run( ) {
                         Toast.makeText(getActivity(), "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         swipeRefresh.setRefreshing(false);
                     }
@@ -177,7 +177,7 @@ public class WeatherFragment extends Fragment {
     /**
      * 加载必应每日一图
      */
-    private void loadBingPic() {
+    private void loadBingPic( ) {
         String requestBingPic = "http://guolin.tech/api/bing_pic";
         HttpUtil.sendOkHttpRequest(requestBingPic, new Callback() {
             @Override
@@ -188,7 +188,7 @@ public class WeatherFragment extends Fragment {
                 editor.apply();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
-                    public void run() {
+                    public void run( ) {
                         Glide.with(WeatherFragment.this).load(bingPic).into(bingPicImg);
                     }
                 });
@@ -202,42 +202,101 @@ public class WeatherFragment extends Fragment {
     }
 
     /**
-     * 处理并展示Weather实体类中的数据。
+     * 处理并展示 HeweatherBean 实体类中的数据。
      */
-    private void showWeatherInfo(Weather weather) {
-        String cityName = weather.basic.cityName;
-        String updateTime = weather.basic.update.updateTime.split(" ")[1];
-        String degree = weather.now.temperature + "℃";
-        String weatherInfo = weather.now.more.info;
+    private void showWeatherInfo(HeweatherBean.HeWeather6Bean heWeather6Bean) {
+        // 地区／城市名称
+        String cityName = heWeather6Bean.getBasic().getLocation();
+        // 接口更新时间
+        String updateTime = heWeather6Bean.getUpdate().getLoc().split(" ")[1];
+        // 温度，默认单位：摄氏度
+        String degree = heWeather6Bean.getNow().getTmp() + "℃";
+        // 实况天气状况
+        String weatherInfo = heWeather6Bean.getNow().getCond_txt();
+
         titleCity.setText(cityName);
-        titleUpdateTime.setText(updateTime);
+        titleUpdateTime.setText("更新时间：" + updateTime);
         degreeText.setText(degree);
         weatherInfoText.setText(weatherInfo);
+
+
+        // 逐三小时预报 Title部分
+        hourlyLayout.removeAllViews();
+        View hourlyviewt = LayoutInflater.from(getActivity()).inflate(R.layout.hourly_item, hourlyLayout, false);
+        TextView timeTextt = (TextView) hourlyviewt.findViewById(R.id.time_text);
+        TextView tmpTexttt = (TextView) hourlyviewt.findViewById(R.id.tmp_text);
+        TextView condTextt = (TextView) hourlyviewt.findViewById(R.id.cond_text);
+        TextView winddirTextt = (TextView) hourlyviewt.findViewById(R.id.wind_dir_text);
+        TextView windscTextt = (TextView) hourlyviewt.findViewById(R.id.wind_sc_text);
+        timeTextt.setText("预报时间");
+        tmpTexttt.setText("温度");
+        condTextt.setText("天气");
+        winddirTextt.setText("风向");
+        windscTextt.setText("风力");
+        hourlyLayout.addView(hourlyviewt);
+        // 逐三小时预报 子部分
+        for (HeweatherBean.HeWeather6Bean.HourlyBean hourlyBean : heWeather6Bean.getHourly()) {
+            View hourlyview = LayoutInflater.from(getActivity()).inflate(R.layout.hourly_item, hourlyLayout, false);
+            TextView timeText = (TextView) hourlyview.findViewById(R.id.time_text);
+            TextView tmpText = (TextView) hourlyview.findViewById(R.id.tmp_text);
+            TextView condText = (TextView) hourlyview.findViewById(R.id.cond_text);
+            TextView winddirText = (TextView) hourlyview.findViewById(R.id.wind_dir_text);
+            TextView windscText = (TextView) hourlyview.findViewById(R.id.wind_sc_text);
+            timeText.setText(hourlyBean.getTime());
+            tmpText.setText(hourlyBean.getTmp());
+            condText.setText(hourlyBean.getCond_txt());
+            winddirText.setText(hourlyBean.getWind_dir());
+            windscText.setText(hourlyBean.getWind_sc());
+            hourlyLayout.addView(hourlyview);
+        }
+
+
+        // 七天预报 Title部分
         forecastLayout.removeAllViews();
-        for (Forecast forecast : weather.forecastList) {
+        View viewt = LayoutInflater.from(getActivity()).inflate(R.layout.forecast_item, forecastLayout, false);
+        TextView dateTextt = (TextView) viewt.findViewById(R.id.date_text);
+        TextView conddTextt = (TextView) viewt.findViewById(R.id.condd_text);
+        TextView condnTextt = (TextView) viewt.findViewById(R.id.condn_text);
+        TextView maxTextt = (TextView) viewt.findViewById(R.id.max_text);
+        TextView minTextt = (TextView) viewt.findViewById(R.id.min_text);
+        dateTextt.setText("预报日期");
+        conddTextt.setText("白天");
+        condnTextt.setText("晚间");
+        maxTextt.setText("最高温");
+        minTextt.setText("最低温");
+        forecastLayout.addView(viewt);
+        // 七天预报 子部分
+        for (HeweatherBean.HeWeather6Bean.DailyForecastBean dailyForecastBean : heWeather6Bean.getDaily_forecast()) {
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.forecast_item, forecastLayout, false);
             TextView dateText = (TextView) view.findViewById(R.id.date_text);
-            TextView infoText = (TextView) view.findViewById(R.id.info_text);
+            TextView conddText = (TextView) view.findViewById(R.id.condd_text);
+            TextView condnText = (TextView) view.findViewById(R.id.condn_text);
             TextView maxText = (TextView) view.findViewById(R.id.max_text);
             TextView minText = (TextView) view.findViewById(R.id.min_text);
-            dateText.setText(forecast.date);
-            infoText.setText(forecast.more.info);
-            maxText.setText(forecast.temperature.max);
-            minText.setText(forecast.temperature.min);
+            dateText.setText(dailyForecastBean.getDate());
+            conddText.setText(dailyForecastBean.getCond_txt_d());
+            condnText.setText(dailyForecastBean.getCond_txt_n());
+            maxText.setText(dailyForecastBean.getTmp_max());
+            minText.setText(dailyForecastBean.getTmp_min());
             forecastLayout.addView(view);
         }
-        if (weather.aqi != null) {
-            aqiText.setText(weather.aqi.city.aqi);
-            pm25Text.setText(weather.aqi.city.pm25);
-        }
-        String comfort = "舒适度：" + weather.suggestion.comfort.info;
-        String carWash = "洗车指数：" + weather.suggestion.carWash.info;
-        String sport = "运行建议：" + weather.suggestion.sport.info;
-        comfortText.setText(comfort);
-        carWashText.setText(carWash);
-        sportText.setText(sport);
+
+
+        // 生活指数 部分
+        comfText.setText("舒适度指数：" + heWeather6Bean.getLifestyle().get(0).getTxt());
+        drsgText.setText("穿衣指数：" + heWeather6Bean.getLifestyle().get(1).getTxt());
+        fluText.setText("感冒指数：" + heWeather6Bean.getLifestyle().get(2).getTxt());
+        sportText.setText("运动指数：" + heWeather6Bean.getLifestyle().get(3).getTxt());
+        travText.setText("旅游指数：" + heWeather6Bean.getLifestyle().get(4).getTxt());
+        uvText.setText("紫外线指数：" + heWeather6Bean.getLifestyle().get(5).getTxt());
+        cwText.setText("洗车指数：" + heWeather6Bean.getLifestyle().get(6).getTxt());
+        airText.setText("空气污染扩散条件指数：" + heWeather6Bean.getLifestyle().get(7).getTxt());
         weatherLayout.setVisibility(View.VISIBLE);
-//        Intent intent = new Intent(this, AutoUpdateService.class);
-//        startService(intent);
+    }
+
+    @Override
+    public void onDestroyView( ) {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

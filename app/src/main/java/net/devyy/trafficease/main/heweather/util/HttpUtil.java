@@ -1,4 +1,4 @@
-package net.devyy.trafficease.main.weather.util;
+package net.devyy.trafficease.main.heweather.util;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

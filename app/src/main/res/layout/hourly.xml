@@ -12,12 +12,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:text="七天预报"
+        android:text="逐三小时预报"
         android:textColor="#fff"
         android:textSize="20sp"/>
 
     <LinearLayout
-        android:id="@+id/forecast_layout"
+        android:id="@+id/hourly_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

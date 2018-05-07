@@ -38,9 +38,11 @@
 
                     <include layout="@layout/now" />
 
+                    <include layout="@layout/hourly"/>
+
                     <include layout="@layout/forecast" />
 
-                    <include layout="@layout/aqi" />
+                    <!--<include layout="@layout/aqi" />-->
 
                     <include layout="@layout/suggestion" />
 
