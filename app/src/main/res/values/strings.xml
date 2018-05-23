@@ -85,4 +85,16 @@
     <string name="tab_menu_map">地图</string>
     <string name="tab_menu_weather">天气</string>
     <string name="tab_menu_mime">我的</string>
+
+    <!-- “我的” 页面 -->
+    <string name="message">我的消息</string>
+    <string name="record">出行记录</string>
+    <string name="achievement">勋章成就</string>
+    <string name="question">我的问答</string>
+    <string name="roadbook">我的路书</string>
+    <string name="team">我的组织</string>
+
+    <string name="user_score">积分</string>
+
+
 </resources>

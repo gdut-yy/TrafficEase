@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private HomeFragment fg1;
     private MapFragment fg2;
     private WeatherFragment fg3;
-//    private MimeFragment fg4;
-    private MyFragment fg4;
+    private MimeFragment fg4;
+//    private MyFragment fg4;
 
     private FragmentManager fManager;
 
@@ -123,8 +123,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tab_menu_setting.setSelected(true);
                 tab_menu_setting_partner.setVisibility(View.INVISIBLE);
                 if(fg4 == null){
-//                    fg4 = new MimeFragment();
-                    fg4 = new MyFragment();
+                    fg4 = new MimeFragment();
+//                    fg4 = new MyFragment();
                     fTransaction.add(R.id.ly_content,fg4);
                 }else{
                     fTransaction.show(fg4);
