@@ -2,7 +2,7 @@
 
 ![](ic_te_launcher.png)
 
-## Traffic Ease v1.1.1
+## Traffic Ease v1.1.2
 
 “Traffic Ease”是一款基于百度地图SDK的智慧出行APP。用户通过此款APP，即可规划出行路线，记录出行轨迹，路线导航，查询公交实时信息，了解出行天气状况，选择酒店、餐厅、停车场等。同时也可以通过各大社交平台转发自己的出行动态，分享出行的实时路况以及出行攻略。
 
@@ -10,15 +10,17 @@
 
 ## 数据来源
 
+- 新闻来源：聚合数据
 - 地图来源：百度地图
 - 天气来源：和风天气
 - 背景图来源：必应图片（每日一图）
 
 ## 应用截图
 
-![](v1.1.0_2.png)
-![](v1.1.0_1.png)
-![](v1.1.1_0.png)
+![](v1.1.2_1.png)
+![](v1.1.2_2.png)
+![](v1.1.2_3.png)
+![](v1.1.2_4.png)
 
 ## 历史版本
 
@@ -29,7 +31,8 @@
 | 3 | v1.0.2 | 主框架-底部Fragment导航栏实现 & 登录页面使用SharedPreferences优化用户体验 |
 | 4 | v1.0.3 | 天气Fragment demo实现 & 天气来源：和风天气 |
 | 5 | v1.1.0 | 基于和风天气认证开发者接口重写WeatherFragment & MapFragment定位功能实现 |
-| 6 | v1.1.1 | 初步实现MimeFragment个人静态页面 |
+| 6 | v1.1.1 | 初步实现MimeFragment个人静态页面 & glide框架版本从 4.6.1 回退到 3.7.0 |
+| 7 | v1.1.2 | 实现HomeFragment首页页面 HDEMO & 注：HDEMO部分仅为快速展示效果，后续版本将去除 |
 
 
 ## 最新版开发环境
@@ -41,8 +44,8 @@
 5. targetSdkVersion 26
 
 ## 相关依赖
-
-		// 百度地图SDK
+	
+	    // 百度地图SDK
 	    compile files('libs/BaiduLBS_Android.jar')
 	    // butterknife 框架
 	    compile 'com.jakewharton:butterknife:8.8.1'
@@ -57,15 +60,15 @@
 	    implementation 'com.android.support:recyclerview-v7:27.0.0'
 	    compile 'com.android.support:support-v4:27.0.0'
 	    compile 'com.android.support:support-v13:27.0.0'
-	    // gson
+	    // gson工具
 	    compile 'com.google.code.gson:gson:2.8.2'
 	    // 网络封装类 okhttp 与 retrofit
 	    compile 'com.squareup.okhttp3:okhttp:3.9.1'
 	    compile 'com.squareup.retrofit2:retrofit:2.3.0'
 	    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-	    // litepal
+	    // litepal框架
 	    compile 'org.litepal.android:core:1.6.1'
-	    //
+	    // circleimageview框架
 	    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
 ## 系统设计
@@ -76,8 +79,8 @@
 
 ## 目标
 
-需求分析，功能点，界面需求
-界面设计，草图
-数据库设计
-系统设计，模块设计，关键技术
-详细设计，图表
+	需求分析，功能点，界面需求
+	界面设计，草图
+	数据库设计
+	系统设计，模块设计，关键技术
+	详细设计，图表

@@ -60,15 +60,15 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.0.0'
     compile 'com.android.support:support-v4:27.0.0'
     compile 'com.android.support:support-v13:27.0.0'
-    // gson
+    // gson工具
     compile 'com.google.code.gson:gson:2.8.2'
     // 网络封装类 okhttp 与 retrofit
     compile 'com.squareup.okhttp3:okhttp:3.9.1'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    // litepal
+    // litepal框架
     compile 'org.litepal.android:core:1.6.1'
-    //
+    // circleimageview框架
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
 }

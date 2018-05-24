@@ -2,41 +2,42 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.devyy.trafficease">
 
-    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
-    <!--//获取设备网络状态，禁用后无法获取网络状态-->
-    <!--<uses-permission android:name="android.permission.INTERNET" />-->
-    <!--//网络权限，当禁用后，无法进行检索等相关业务-->
-    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
-    <!--//读取设备硬件信息，统计数据-->
-    <!--<uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />-->
-    <!--//读取系统信息，包含系统版本等信息，用作统计-->
-    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
-    <!--//获取设备的网络状态，鉴权所需网络代理-->
-    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
-    <!--//允许sd卡写权限，需写入地图数据，禁用后无法显示地图-->
-    <!--<uses-permission android:name="android.permission.WRITE_SETTINGS" />-->
-    <!--//鉴权所需该权限获取进程列表-->
-    <!--<uses-permission android:name="android.permission.CAMERA" />-->
-    <!--//使用步行AR导航，配置Camera权限-->
+    <!-- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> -->
+    <!-- //获取设备网络状态，禁用后无法获取网络状态 -->
+    <!-- <uses-permission android:name="android.permission.INTERNET" /> -->
+    <!-- //网络权限，当禁用后，无法进行检索等相关业务 -->
+    <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE" /> -->
+    <!-- //读取设备硬件信息，统计数据 -->
+    <!-- <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" /> -->
+    <!-- //读取系统信息，包含系统版本等信息，用作统计 -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
+    <!-- //获取设备的网络状态，鉴权所需网络代理 -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
+    <!-- //允许sd卡写权限，需写入地图数据，禁用后无法显示地图 -->
+    <!-- <uses-permission android:name="android.permission.WRITE_SETTINGS" /> -->
+    <!-- //鉴权所需该权限获取进程列表 -->
+    <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
+    <!-- //使用步行AR导航，配置Camera权限 -->
 
-    <!-- 这个权限用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
-    <!-- 这个权限用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-    <!-- 用于读取手机当前的状态-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <!-- 访问网络，网络定位需要上网-->
+
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 访问网络，网络定位需要上网 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- SD卡读取权限，用户写入离线定位数据-->
 
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_te_launcher"
@@ -103,18 +104,17 @@
 
         <activity
             android:name=".main.MainActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <!-- 声明service组件 -->
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" >
-        </service>
-        
-        <!--<service android:name=".main.weather.service.AutoUpdateService"-->
-            <!--android:enabled="true"-->
-            <!--android:exported="true"></service>-->
+            android:process=":remote"></service>
+
+        <!-- <service android:name=".main.weather.service.AutoUpdateService" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true"></service> -->
     </application>
 
 </manifest>
