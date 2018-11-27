@@ -4,16 +4,16 @@ import java.util.List;
 
 /**
  * 聚合数据新闻头条实体类（由 Gson 工具生成 | 认证个人开发者版本）
- *
+ * <p>
  * 接口地址：http://v.juhe.cn/toutiao/index
  * 返回格式：json
  * 请求方式：get/post
  * 请求示例：http://v.juhe.cn/toutiao/index?type=top&key=APPKEY
  * 接口备注：返回头条，社会，国内，娱乐，体育，军事，科技，财经，时尚等新闻信息
- *
- *
+ * <p>
+ * <p>
  * URL=http://v.juhe.cn/toutiao/index?type=top&key=4c71dccb365e8058f28093d02a7149ff
- *
+ * <p>
  * Created by ZYY on 2018/5/24.
  */
 

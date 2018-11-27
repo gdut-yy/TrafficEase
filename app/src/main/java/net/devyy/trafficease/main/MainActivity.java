@@ -19,7 +19,7 @@ import net.devyy.trafficease.main.fragment.WeatherFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    //Activity UI Object
+    // Activity UI Object
     private LinearLayout ly_tab_menu_channel;
     private TextView tab_menu_channel;
     private TextView tab_menu_channel_num;
