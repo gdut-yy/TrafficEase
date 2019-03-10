@@ -2,7 +2,7 @@
 
 ![](readme/ic_trafficease.png)
 
-## TrafficEase v1.2.0
+## TrafficEase v1.2.1
 
 **“TrafficEase”** 是一款基于百度地图SDK的智慧出行APP。用户通过此款APP，即可规划出行路线，记录出行轨迹，路线导航，查询公交实时信息，了解出行天气状况，选择酒店、餐厅、停车场等。同时也可以通过各大社交平台转发自己的出行动态，分享出行的实时路况以及出行攻略。
 
@@ -25,7 +25,7 @@
 ## 历史版本
 
 | 序号 | 版本号 | 说明 |
-|---|--------|-----------|
+| :-: | :-: | - |
 | 1 | v1.0.0 | 前期准备 & 统一开发环境 |
 | 2 | v1.0.1 | 实现登录注册功能 & 接入SMS短信验证码功能 & 接入百度地图SDK |
 | 3 | v1.0.2 | 主框架-底部Fragment导航栏实现 & 登录页面使用SharedPreferences优化用户体验 |
@@ -34,15 +34,15 @@
 | 6 | v1.1.1 | 初步实现MimeFragment个人静态页面 & glide框架版本从 4.6.1 回退到 3.7.0 |
 | 7 | v1.1.2 | 实现HomeFragment首页页面 HDEMO & 注：HDEMO部分仅为快速展示效果，后续版本将去除 |
 | 8 | v1.2.0 | 增添readme文件夹 & 适配 Android 8.0 & 实现 HomeFragment 功能 & 移除登录注册页面 |
-
+| 9 | v1.2.1 | 更新 readme & 移除服务端通信部分 & 跳过登录注册页面 |
 
 ## 最新版开发环境
 
-1. Android Studio >= 3.0.1
-2. Gradel Version: 4.1
-3. Gradle Plugin Version: 3.0.1
+1. Android Studio >= 3.3.1
+2. Gradel Version: 4.10.1
+3. Gradle Plugin Version: 3.3.1
 4. minSdkVersion：21
-5. targetSdkVersion 26
+5. targetSdkVersion 27
 
 ## 相关依赖
 	
@@ -71,17 +71,3 @@
 	    compile 'org.litepal.android:core:1.6.1'
 	    // circleimageview框架
 	    implementation 'de.hdodenhof:circleimageview:2.2.0'
-
-## 系统设计
-
-- 服务器端：Spring Boot
-- 数据库：MySQL5.7
-- JDK版本：1.8
-
-## 目标
-
-	需求分析，功能点，界面需求
-	界面设计，草图
-	数据库设计
-	系统设计，模块设计，关键技术
-	详细设计，图表
